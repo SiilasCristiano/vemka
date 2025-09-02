@@ -1,0 +1,4 @@
+Flask
+Fla
+Flask-SQLAlchemy
+gunicorn
