@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Etapa 2</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Cadastro - Etapa 2</h2>
+        <form action="cadastro3.html" method="post">
+            <input type="email" name="email" placeholder="Digite seu email" required>
+            <input type="password" name="senha" placeholder="Digite sua senha" required>
+            <input type="password" name="senha2" placeholder="Repita sua senha" required>
+            <button type="submit">Próximo</button>
+        </form>
+    </div>
+</body>
+</html>

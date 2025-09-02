@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VemKa - Cadastro</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Crie seu perfil no <span class="highlight">VemKa!</span> 🎉</h1>
+    <p>Selecione como deseja se cadastrar:</p>
+
+    <div class="options">
+      <label class="option">
+        <input type="radio" name="tipo" value="casal">
+        <span class="emoji">👩‍❤️‍👨</span>
+        <span>Casal</span>
+      </label>
+
+      <label class="option">
+        <input type="radio" name="tipo" value="solteira">
+        <span class="emoji">👩</span>
+        <span>Solteira</span>
+      </label>
+
+      <label class="option">
+        <input type="radio" name="tipo" value="solteiro">
+        <span class="emoji">👨</span>
+        <span>Solteiro</span>
+      </label>
+    </div>
+
+    <button class="btn-primary" onclick="proximo()">Próximo ➡️</button>
+  </div>
+
+  <script>
+    function proximo() {
+      const selecionado = document.querySelector('input[name="tipo"]:checked');
+      if (selecionado) {
+        // Redireciona para a próxima página com a opção selecionada
+        window.location.href = `/cadastro2?option=${selecionado.value}`;
+      } else {
+        alert("Por favor, selecione uma opção!");
+      }
+    }
+  </script>
+</body>
+</html>

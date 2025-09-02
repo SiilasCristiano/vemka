@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VemKa - Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Bem-vindo ao <span class="highlight">VemKa!</span> 🎉</h1>
+
+    <form class="login-form">
+      <input type="email" placeholder="Digite seu e-mail" required>
+      <input type="password" placeholder="Digite sua senha" required>
+
+      <button type="submit" class="btn-primary">Entrar</button>
+
+      <div class="links">
+        <!-- apontando para as rotas -->
+        <a href="/esqueci">Esqueci a senha</a>
+        <a href="/cadastro">Realizar cadastro</a>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
