@@ -1,11 +1,17 @@
+import os
 from flask import Flask, render_template, request, redirect, url_for
 from flask_cors import CORS
 import sqlite3
 
+# ---------------- GARANTIR PASTA DE UPLOAD ----------------
+UPLOAD_FOLDER = os.path.join("static", "uploads")
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # cria a pasta se não existir
+
 app = Flask(__name__)
 CORS(app)
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
-# Conexão com o banco
+# ---------------- CONEXÃO COM BANCO ----------------
 conn = sqlite3.connect("vemka.db", check_same_thread=False)
 cursor = conn.cursor()
 
@@ -18,36 +24,30 @@ cursor.execute('''
         senha TEXT,
         nome TEXT,
         idade INTEGER,
-        bio TEXT
+        bio TEXT,
+        foto1 TEXT,
+        foto2 TEXT,
+        foto3 TEXT,
+        foto4 TEXT
     )
 ''')
 conn.commit()
 
-import os
-
-UPLOAD_FOLDER = os.path.join("static", "uploads")
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
-
 # ---------------- ROTAS ----------------
 
-# Rota inicial -> página de login
 @app.route('/')
 def home():
     return render_template('index.html')
 
-# Rota para cadastro etapa 1
 @app.route('/cadastro')
 def cadastro():
     return render_template('cadastro1.html')
 
-# Rota para cadastro etapa 2
 @app.route('/cadastro2')
 def cadastro2():
-    option = request.args.get('option')  # Obtém a opção selecionada
+    option = request.args.get('option')
     return render_template('cadastro2.html', option=option)
 
-# Rota para cadastro etapa 3 (fotos, nome, idade, bio)
 @app.route('/cadastro3')
 def cadastro3():
     return render_template('cadastro3.html')
@@ -61,14 +61,14 @@ def salvar():
     idade = request.form.get('idade')
     bio = request.form.get('bio')
 
-    # Salvar fotos (só os nomes por enquanto)
+    # Salvar fotos
     fotos = []
     for i in range(1, 5):
         foto = request.files.get(f"foto{i}")
-        if foto and foto.filename != "":
-            caminho = f"static/uploads/{foto.filename}"
+        if foto and foto.filename:
+            caminho = os.path.join(app.config["UPLOAD_FOLDER"], foto.filename)
             foto.save(caminho)
-            fotos.append(caminho)
+            fotos.append(f"/static/uploads/{foto.filename}")  # caminho relativo para usar no HTML
         else:
             fotos.append(None)
 
@@ -79,17 +79,14 @@ def salvar():
     conn.commit()
 
     return redirect(url_for('perfil', email=email))
-    
-# Rota de perfil
+
 @app.route('/perfil')
 def perfil():
     email = request.args.get('email')
     cursor.execute("SELECT * FROM usuarios WHERE email = ?", (email,))
     usuario = cursor.fetchone()
-
     return render_template('perfil.html', usuario=usuario)
 
-# Rota para esqueci a senha
 @app.route('/esqueci')
 def esqueci():
     return render_template('esqueci.html')
