@@ -23,6 +23,12 @@ cursor.execute('''
 ''')
 conn.commit()
 
+import os
+
+UPLOAD_FOLDER = os.path.join("static", "uploads")
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
 # ---------------- ROTAS ----------------
 
 # Rota inicial -> página de login
