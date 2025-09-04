@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil - {{ usuario[4] }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    .fotos {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .fotos img {
+      width: 100%;
+      border-radius: 10px;
+      object-fit: cover;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>👤 Perfil de {{ usuario[4] }}</h1>
+    <p><strong>Tipo:</strong> {{ usuario[1] }}</p>
+    <p><strong>Email:</strong> {{ usuario[2] }}</p>
+    <p><strong>Idade:</strong> {{ usuario[5] }}</p>
+    <p><strong>Bio:</strong> {{ usuario[6] }}</p>
+
+    <h2>📸 Fotos</h2>
+    <div class="fotos">
+      {% for i in range(7, 11) %}
+        {% if usuario[i] %}
+          <img src="{{ url_for('static', filename=usuario[i].replace('static/', '')) }}" alt="Foto {{ i-6 }}">
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>
